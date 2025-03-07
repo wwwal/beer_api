@@ -7,3 +7,6 @@ api_platform:
             vary: ['Content-Type', 'Authorization', 'Origin']
     resource_class_directories:
         - '%kernel.project_dir%/src/Domain/Entity'
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
