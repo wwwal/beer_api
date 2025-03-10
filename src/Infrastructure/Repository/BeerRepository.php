@@ -42,8 +42,15 @@ class BeerRepository extends ServiceEntityRepository implements ReadBeerReposito
             ->leftJoin('beer.checkin', 'checkin')
             ->addSelect('AVG(checkin.notation) AS HIDDEN avg_score')
             ->groupBy('beer.id')
-            ->addOrderBy('avg_score', 'DESC')
-        ;
+            ->addOrderBy('avg_score', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByBiterness(): array
+    {
+        $qb = $this->createQueryBuilder('beer')
+            ->addOrderBy('beer.ibu', 'DESC');
 
         return $qb->getQuery()->getResult();
     }

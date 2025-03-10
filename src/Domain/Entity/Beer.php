@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Infrastructure\ApiPlatform\State\Provider\BeersByBiternessProvider;
 use App\Infrastructure\ApiPlatform\State\Provider\BeersByScoreProvider;
 use App\Infrastructure\Repository\BeerRepository;
 use Doctrine\Common\Collections\Collection;
@@ -29,6 +30,11 @@ use Symfony\Component\Validator\Constraints as Assert;
             '/beers_by_score',
             paginationEnabled: false,
             provider: BeersByScoreProvider::class,
+        ),
+        new GetCollection(
+            '/beers_by_biterness',
+            paginationEnabled: false,
+            provider: BeersByBiternessProvider::class,
         ),
 
         // crud

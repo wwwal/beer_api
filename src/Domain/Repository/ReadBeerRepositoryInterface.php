@@ -6,9 +6,11 @@ namespace App\Domain\Repository;
 
 use App\Domain\Entity\Beer;
 
-interface ReadBeerRepositoryInterface {
+interface ReadBeerRepositoryInterface
+{
     public function findOneByExternalId(int $id): ?Beer;
 
-    
     public function findByScore(): array;
+
+    public function findByBiterness(): array;
 }
