@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Domain\Repository;
+
+use App\Domain\Entity\Brewer;
+
+interface ReadBrewerRepositoryInterface {
+    public function findOneByExternalId(int $id): ?Brewer;
+
+    public function findCountriesByNumberOfBrewers(): array;
+}
