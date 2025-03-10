@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Infrastructure\ApiPlatform\State\Processor\CreateUserProcessor;
 use App\Infrastructure\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -22,7 +23,9 @@ use Doctrine\ORM\Mapping as ORM;
     operations: [
         new GetCollection(),
         new Get(),
-        new Post(),
+        new Post(
+            processor: CreateUserProcessor::class
+        ),
         new Put(),
         new Patch(),
         new Delete()
