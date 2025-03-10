@@ -35,4 +35,16 @@ class BeerRepository extends ServiceEntityRepository implements ReadBeerReposito
         $this->getEntityManager()->flush();
         $this->getEntityManager()->clear();
     }
+
+    public function findByScore(): array
+    {
+        $qb = $this->createQueryBuilder('beer')
+            ->leftJoin('beer.checkin', 'checkin')
+            ->addSelect('AVG(checkin.notation) AS HIDDEN avg_score')
+            ->groupBy('beer.id')
+            ->addOrderBy('avg_score', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

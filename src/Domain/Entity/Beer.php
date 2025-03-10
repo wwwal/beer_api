@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Infrastructure\ApiPlatform\State\Provider\BeersByScoreProvider;
 use App\Infrastructure\Repository\BeerRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -23,6 +24,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(name: "external_id_idx", columns: ["external_id"])]
 #[ApiResource(
     operations: [
+        // queries
+        new GetCollection(
+            '/beers_by_score',
+            paginationEnabled: false,
+            provider: BeersByScoreProvider::class,
+        ),
+
+        // crud
         new GetCollection(),
         new Get(),
         new Post(),
@@ -75,7 +84,7 @@ class Beer
     
     #[ORM\OneToMany(targetEntity: Checkin::class, mappedBy: 'beer', cascade:['remove'])]
     #[ApiProperty(writable: false)]
-    private Collection $beers;
+    private Collection $checkin;
 
     public function getId(): ?int
     {
