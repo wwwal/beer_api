@@ -43,7 +43,7 @@ class Beer
     private ?int $id = null;
 
     #[ORM\Column]
-    #[ApiProperty(readable: false, writable: false)]
+    #[ApiProperty(readable: false, writable: true)]
     private ?int $externalId = null;
 
     #[ORM\Column(length: 255)]

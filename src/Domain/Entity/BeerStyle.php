@@ -23,7 +23,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Index(name: "external_id_idx", columns: ["external_id"])]
 #[ApiResource(
     operations: [
-        new GetCollection(),
+        new GetCollection(
+            normalizationContext: ['groups' => ['read', 'read:beer_styles:collection']],
+            paginationEnabled: true
+        ),
         new Get(),
         new Post(),
         new Put(),

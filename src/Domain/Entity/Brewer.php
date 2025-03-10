@@ -11,11 +11,29 @@ use App\Infrastructure\Repository\BrewerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BrewerRepository::class)]
 #[ORM\Index(name: "external_id_idx", columns: ["external_id"])]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            normalizationContext: ['groups' => ['read', 'read:brewers:collection']],
+            paginationEnabled: true
+        ),
+        new Get(),
+        new Post(),
+        new Put(),
+        new Patch(),
+        new Delete()
+    ]
+)]
 class Brewer
 {
     use TimestampableEntity;
@@ -43,7 +61,9 @@ class Brewer
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $country = null;
 
+    #[Groups('read:beer_styles:single')]
     #[ORM\OneToMany(targetEntity: Beer::class, mappedBy: 'brewer', cascade: ['remove'])]
+    #[ApiProperty(writable: false)]
     private Collection $beers;
 
     public function __construct()
