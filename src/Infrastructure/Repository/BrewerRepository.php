@@ -23,4 +23,14 @@ class BrewerRepository extends ServiceEntityRepository implements ReadBrewerRepo
     {
         return $this->findOneBy(['externalId' => $id]);
     }
+
+    public function findCountriesByNumberOfBrewers(): array
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b.country, COUNT(b.id) AS brewer_count')
+            ->groupBy('b.country')
+            ->orderBy('brewer_count', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

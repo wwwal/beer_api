@@ -8,4 +8,6 @@ use App\Domain\Entity\Brewer;
 
 interface ReadBrewerRepositoryInterface {
     public function findOneByExternalId(int $id): ?Brewer;
+
+    public function findCountriesByNumberOfBrewers(): array;
 }

@@ -17,12 +17,21 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
+use App\Infrastructure\ApiPlatform\State\Provider\CountriesByNumberOfBrewersProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BrewerRepository::class)]
 #[ORM\Index(name: "external_id_idx", columns: ["external_id"])]
 #[ApiResource(
     operations: [
+        // queries
+        new GetCollection(
+            '/countries_by_brewers',
+            paginationEnabled: false,
+            provider: CountriesByNumberOfBrewersProvider::class,
+        ),
+
+        // crud
         new GetCollection(
             normalizationContext: ['groups' => ['read', 'read:brewers:collection']],
             paginationEnabled: true
