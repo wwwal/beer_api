@@ -7,6 +7,7 @@ namespace App\Infrastructure\ApiPlatform\State\Provider;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Application\Action\GetBeersByScore;
+use App\Domain\Entity\Beer;
 
 /**
  * @implements ProviderInterface<Beer>

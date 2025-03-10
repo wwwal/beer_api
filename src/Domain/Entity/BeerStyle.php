@@ -17,12 +17,21 @@ use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\ApiProperty;
+use App\Infrastructure\ApiPlatform\State\Provider\BeerStylesByNumberOfBeersProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BeerStyleRepository::class)]
 #[ORM\Index(name: "external_id_idx", columns: ["external_id"])]
 #[ApiResource(
     operations: [
+        // queries
+        new GetCollection(
+            '/beers_style_by_beers_count',
+            paginationEnabled: false,
+            provider: BeerStylesByNumberOfBeersProvider::class,
+        ),
+
+        // crud
         new GetCollection(
             normalizationContext: ['groups' => ['read', 'read:beer_styles:collection']],
             paginationEnabled: true

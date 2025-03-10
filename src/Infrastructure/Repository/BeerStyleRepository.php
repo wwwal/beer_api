@@ -24,4 +24,15 @@ class BeerStyleRepository extends ServiceEntityRepository implements ReadBeerSty
     {
         return $this->findOneBy(['externalId' => $id]);
     }
+
+    public function findOrderedByNumberOfBeers(): array
+    {
+        $qb = $this->createQueryBuilder('beer_style')
+            ->leftJoin('beer_style.beers', 'b')
+            ->addSelect('COUNT(b.id) AS HIDDEN beer_count')
+            ->groupBy('beer_style.id')
+            ->orderBy('beer_count', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

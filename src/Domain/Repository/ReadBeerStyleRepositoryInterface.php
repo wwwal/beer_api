@@ -8,4 +8,6 @@ use App\Domain\Entity\BeerStyle;
 
 interface ReadBeerStyleRepositoryInterface {
     public function findOneByExternalId(int $id): ?BeerStyle;
+
+    public function findOrderedByNumberOfBeers(): array;
 }
